@@ -47,3 +47,26 @@ for i in range(1,maxiter+1):
         break
     else:
         continue
+def f(a,b):
+    t=np.array([[a],[b]])
+    y=0.5*t.transpose().dot(H).dot(t)+C.transpose().dot(t)
+    return  y.tolist()[0][0]
+if i!=maxiter:
+    lb=int(x[0].tolist()[0])-2
+    ub=int(x[1].tolist()[0])+2
+    x1 = np.linspace(lb, ub, 25)
+    x2 = np.linspace(lb, ub, 25)
+    z = [[0 for i in range(len(x1))] for i in range(len(x2))] 
+    c1=0
+    c2=0
+    for i in x1:
+        for j in x2:
+            z[c1][c2] = f(i,j)
+            c2=c2+1
+        c1=c1+1
+        c2=0 
+    z=np.array(z).ravel().reshape((len(x1),len(x2)))   
+    plt.figure(figsize=(8,6))
+    plt.contourf(x1, x2, z, levels=10)
+    plt.plot(x1h, x2h, 'r+')
+    plt.colorbar()
